@@ -24,8 +24,8 @@ let element = '#background';
 //(data: array)(options: object)(element: DOM element to render into)
 function drawBarChart(data, options, element) {
   setDimensions(element, options); //Always call first, this sets the size of the background
-  makeElements();
-  setOptions();
+  makeElements(data);
+  setOptions(options);
 }
 
 
@@ -39,8 +39,8 @@ function setDimensions(elm, opt) {
 
 
 //Generates a span for each data entry
-function makeElements() {
-  const largestElement = getLargest();
+function makeElements(data) {
+  const largestElement = getLargest(data);
   let barHeight = 0;
 
   for(let i = 0; i < data.length; i++) {
@@ -53,6 +53,7 @@ function makeElements() {
     barHeight = (data[i][0] / largestElement) * 100;
     $('#bar' + i).css('height', (barHeight + '%'));
 
+    //Appends a new label for each of the bars
     $("#label").append($("<h3>" + data[i][1] + "</h3>"));
   }
   //change the bars width
@@ -60,29 +61,29 @@ function makeElements() {
 }
 
 
-function setOptions() {
+function setOptions(opt) {
   //Set the background color of the bars
-  $(".bars").css("background-color", options.barColor);
+  $(".bars").css("background-color", opt.barColor);
 
   //Set the position of the values
-  if(options.valuesPosition === 'top') {
+  if(opt.valuesPosition === 'top') {
     $('.bars p').css('top', '20px');
   }
-  else if(options.valuesPosition === 'centre') {
+  else if(opt.valuesPosition === 'centre') {
     $('.bars p').css('top', '50%');
   }
-  else if(options.valuesPosition === 'bottom') {
+  else if(opt.valuesPosition === 'bottom') {
     $('.bars p').css('bottom', '0');
   }
 
-  //Sets the data's color
-  $('.bars p').css('color', options.labelColor);
-
+  //Sets the label color (and the data color)
+  $('#label h3').css('color', opt.labelColor);
+  $('.bars p').css('color', opt.labelColor);
 }
 
 
 //Returns the largest value from the data
-function getLargest() {
+function getLargest(data) {
   let largest = 0;
   //Iterate through the data array and compare the current element with the largest saved number
   for(let i = 0; i < data.length; i++) {
