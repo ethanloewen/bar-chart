@@ -15,7 +15,7 @@ let options = {
   labelColor: 'black',
   spacing: '',
   axesStep: 1,                 //Sets how often ticks are made on the Y-axis
-  valuesPosition: 'top'       //'top', 'centre', or 'bottom'
+  valuesPosition: 'centre'       //'top', 'centre', or 'bottom'
 }
 
 let element = '#background';
@@ -111,8 +111,6 @@ function drawAxis(opt, largest) {
     $('#axis' + count).css('height', i + 'px');
     count++;
   }
-
-
 }
 
 
