@@ -105,7 +105,7 @@ function drawAxis(opt, largest) {
   const step = opt.axesStep * unit;
 
   let count = 0;
-  for(let i = step; i <= opt.height; i += step) {
+  for(let i = step; i <= (opt.height + 1); i += step) {
     //Creates a div for each step
     $(".container").append($("<div class='axis' id='axis" + count + "'></div>"));
     $('#axis' + count).css('height', i + 'px');

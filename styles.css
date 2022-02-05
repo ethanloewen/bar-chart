@@ -88,7 +88,7 @@ table {
   width: 100%;
   z-index: 1;
   position: absolute;
-  top: 0;
+  top: 50px; /* Must match the height of the header section */
   left: 0;
 }
 
@@ -96,7 +96,12 @@ table {
   border-top: 2px dotted black;
   width: 100%;
   position: absolute;
-  bottom: 0;
+  bottom: 0px;
 }
 
+header {
+  height: 50px;
+  line-height: 50px;
+  text-align: center;
+}
 
