@@ -1,21 +1,21 @@
-//Data is the array that will be graphed
+//Data that will be graphed
 let data = [
   [1, 'label 1'],
   [2, 'label 2'],
   [3, 'label 3'],
   [4, 'label 4'],
-  [5, 'label 5']
+  [10, 'label 5']
 ];
 
 //Options to set how the data will be displayed
 let options = {
   width: '100%',              //Can be '%' or 'px'
-  height: '700px',            //Must be 'px'
+  height: 500,                //Always in 'px'
   barColor: '#FFFDD0',
   labelColor: 'black',
   spacing: '',
-  axes: '',
-  valuesPosition: 'top'       //'top', 'centre', or 'bottom'
+  axesStep: 1,                 //Sets how often ticks are made on the Y-axis
+  valuesPosition: 'top',       //'top', 'centre', or 'bottom'
 }
 
 let element = '#background';
@@ -24,7 +24,7 @@ let element = '#background';
 //(data: array)(options: object)(element: DOM element to render into)
 function drawBarChart(data, options, element) {
   setDimensions(element, options); //Always call first, this sets the size of the background
-  makeElements(data);
+  makeElements(data, options);
   setOptions(options);
 }
 
@@ -32,14 +32,16 @@ function drawBarChart(data, options, element) {
 //Set the width and height of the background div
 function setDimensions(elm, opt) {
   $(elm).css("width", opt.width);
-  $(elm).css("height", opt.height);
+  $(elm).css("height", opt.height + 'px');
+  //Forces the height of the container to match the background
+  $(".container").css("height", opt.height + 'px')
   //Keeps the label width the same as the background width
   $("#label").css("width", opt.width);
 }
 
 
 //Generates a span for each data entry
-function makeElements(data) {
+function makeElements(data, opt) {
   const largestElement = getLargest(data);
   let barHeight = 0;
 
@@ -56,8 +58,10 @@ function makeElements(data) {
     //Appends a new label for each of the bars
     $("#label").append($("<h3>" + data[i][1] + "</h3>"));
   }
-  //change the bars width
-  //$('.bars').css("width", '75px');
+
+  //Draw the axis
+  drawAxis(opt, largestElement);
+
 }
 
 
@@ -92,6 +96,14 @@ function getLargest(data) {
     }
   }
   return largest;
+}
+
+//Finds what size one unit is, then finds what size a step is (all in px)
+function drawAxis(opt, largest) {
+  const unit = opt.height / largest;
+  const step = opt.axesStep * unit;
+  //console.log(unit + ' - ' + step)
+  $('.axis').css('height', step + 'px');
 }
 
 
