@@ -2,15 +2,15 @@
 let data = [
   [1, 'label 1'],
   [2, 'label 2'],
-  [3, 'label 3'],
-  [4, 'label 4'],
-  [10, 'label 5']
+  [7, 'label 3'],
+  [1, 'label 4'],
+  [5, 'label 5']
 ];
 
 //Options to set how the data will be displayed
 let options = {
   width: '100%',              //Can be '%' or 'px'
-  height: 500,                //Always in 'px'
+  height: 800,                //Always in 'px'
   barColor: '#FFFDD0',
   labelColor: 'black',
   spacing: '',
@@ -98,12 +98,21 @@ function getLargest(data) {
   return largest;
 }
 
-//Finds what size one unit is, then finds what size a step is (all in px)
+//Creates a grid for the y-axis
 function drawAxis(opt, largest) {
+  //Finds what size one unit is, then finds what size a step is (all in px)
   const unit = opt.height / largest;
   const step = opt.axesStep * unit;
-  //console.log(unit + ' - ' + step)
-  $('.axis').css('height', step + 'px');
+
+  let count = 0;
+  for(let i = step; i <= opt.height; i += step) {
+    //Creates a div for each step
+    $(".container").append($("<div class='axis' id='axis" + count + "'></div>"));
+    $('#axis' + count).css('height', i + 'px');
+    count++;
+  }
+
+
 }
 
 
