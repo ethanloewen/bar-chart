@@ -15,7 +15,8 @@ let options = {
   labelColor: 'black',
   spacing: '',
   axesStep: 1,                 //Sets how often ticks are made on the Y-axis
-  valuesPosition: 'centre'       //'top', 'centre', or 'bottom'
+  valuesPosition: 'centre',    //'top', 'centre', or 'bottom'
+  titleSize: '30px'            //Should be 100px or less
 }
 
 let element = '#background';
@@ -98,6 +99,7 @@ function getLargest(data) {
   return largest;
 }
 
+let heightArr = [];
 //Creates a grid for the y-axis
 function drawAxis(opt, largest) {
   //Finds what size one unit is, then finds what size a step is (all in px)
@@ -109,6 +111,8 @@ function drawAxis(opt, largest) {
     //Creates a div for each step
     $(".container").append($("<div class='axis' id='axis" + count + "'></div>"));
     $('#axis' + count).css('height', i + 'px');
+    //Saved heights for later
+    heightArr.push(i);
     count++;
   }
 }
@@ -116,6 +120,39 @@ function drawAxis(opt, largest) {
 
 //Runs when document is done loading
 $(document).ready(function(){
+  //Main function call
   drawBarChart(data, options, element);
+
+  //Runs when mouse enters the .bars class
+  $(".bars").mouseenter(function() {
+    //Finds the id of the hovered element
+    let hoverID = this.id;
+    //Gets the height of the hovered element
+    let hoverHeight = $('#' + hoverID).height();
+
+    let closest = null;
+    let closestIndex = 0;
+    for(let i = 0; i < heightArr.length; i++) {
+      //Check each axis div to find the closest height to the hovered element
+      if(closest == null || Math.abs(heightArr[i] - hoverHeight) < Math.abs(closest - hoverHeight)) {
+        closest = heightArr[i];
+        closestIndex = i;
+      }
+    }
+
+    //The workAxis variable is saved to use for handling mouse exit
+    workAxis = '#axis' + closestIndex;
+    //Sets the border top to solid
+    $(workAxis).css('border-top', '3px solid black');
+  });
+
+  //Runs when mouse exits the .bars class
+  $(".bars").mouseleave(function() {
+    if(workAxis !== null) {
+      //Sets the border top to back to dotted
+      $(workAxis).css('border-top', '2px dotted black');
+    }
+  });
+
 });
 

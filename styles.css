@@ -88,7 +88,7 @@ table {
   width: 100%;
   z-index: 1;
   position: absolute;
-  top: 50px; /* Must match the height of the header section */
+  top: 100px; /* Must match the height of the header section */
   left: 0;
 }
 
@@ -100,8 +100,13 @@ table {
 }
 
 header {
-  height: 50px;
-  line-height: 50px;
+  height: 100px;
+  line-height: 100px;
   text-align: center;
+}
+
+header h1 {
+  font-family: "Roboto", sans-serif;
+  font-size: 30px;
 }
 
