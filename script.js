@@ -4,15 +4,17 @@ let data = [
   [2, 'label 2'],
   [7, 'label 3'],
   [1, 'label 4'],
-  [5, 'label 5']
+  [5, 'label 5'],
+  [10, 'label 6'],
+  [4.5, 'label 7'],
 ];
 
 //Options to set how the data will be displayed
 let options = {
   width: '100%',              //Can be '%' or 'px'
   height: 800,                //Always in 'px'
-  barColor: '#FFFDD0',
-  labelColor: 'black',
+  barColor: '#0a9396',
+  labelColor: 'white',
   spacing: '',
   axesStep: 1,                 //Sets how often ticks are made on the Y-axis
   valuesPosition: 'centre',    //'top', 'centre', or 'bottom'
@@ -143,14 +145,16 @@ $(document).ready(function(){
     //The workAxis variable is saved to use for handling mouse exit
     workAxis = '#axis' + closestIndex;
     //Sets the border top to solid
-    $(workAxis).css('border-top', '3px solid black');
+    $(workAxis).css('border-top', '3px dotted black');
+    $(workAxis).css('width', '100%');
   });
 
   //Runs when mouse exits the .bars class
   $(".bars").mouseleave(function() {
     if(workAxis !== null) {
       //Sets the border top to back to dotted
-      $(workAxis).css('border-top', '2px dotted black');
+      $(workAxis).css('border-top', '3px solid black');
+      $(workAxis).css('width', '3%');
     }
   });
 
